@@ -1,5 +1,7 @@
 const request = require('supertest');
-const { validate } = require('uuid');
+const {
+  validate
+} = require('uuid');
 
 const app = require('../');
 
@@ -20,11 +22,11 @@ describe('Todos', () => {
         title: 'test todo',
         deadline: todoDate
       })
-      .set('username', userResponse.body.username);
+      .set('username', 'user1');
 
     const response = await request(app)
       .get('/todos')
-      .set('username', userResponse.body.username);
+      .set('username', 'user1');
 
     expect(response.body).toEqual(
       expect.arrayContaining([
@@ -49,7 +51,7 @@ describe('Todos', () => {
         title: 'test todo',
         deadline: todoDate
       })
-      .set('username', userResponse.body.username)
+      .set('username', 'user2')
       .expect(201);
 
     expect(response.body).toMatchObject({
@@ -77,7 +79,7 @@ describe('Todos', () => {
         title: 'test todo',
         deadline: todoDate
       })
-      .set('username', userResponse.body.username);
+      .set('username', 'user7');
 
     const response = await request(app)
       .put(`/todos/${todoResponse.body.id}`)
